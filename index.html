@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMULATEUR RANKED FORTNITE - Calculateur de Points</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #00d4ff;
+            font-size: 0.95em;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"],
+        select {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00d4ff;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        input[type="number"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .value-display {
+            background: rgba(0, 212, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid #00d4ff;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+            color: #00ff88;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+            color: #000;
+        }
+
+        .btn-calculate:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-label {
+            color: #a0a0a0;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 3em;
+            font-weight: 900;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .result-positive {
+            color: #00ff88;
+        }
+
+        .result-negative {
+            color: #ff4444;
+        }
+
+        .result-neutral {
+            color: #ffaa00;
+        }
+
+        .result-detail {
+            color: #a0a0a0;
+            font-size: 0.85em;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid #00d4ff;
+            border-radius: 4px;
+            font-size: 0.85em;
+            line-height: 1.6;
+            color: #c0c0c0;
+        }
+
+        .info-box strong {
+            color: #00d4ff;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .result-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ SIMULATEUR RANKED</h1>
+        <p class="subtitle">Fortnite - Calculateur de Points</p>
+
+        <form id="simulatorForm">
+            <div class="form-group">
+                <label for="rank">Rang Actuel</label>
+                <select id="rank" required>
+                    <option value="">-- Sélectionnez votre rang --</option>
+                    <option value="bronze">Bronze</option>
+                    <option value="silver">Silver</option>
+                    <option value="gold">Gold</option>
+                    <option value="platinum">Platinum</option>
+                    <option value="diamond">Diamond</option>
+                    <option value="elite">Elite</option>
+                    <option value="champion">Champion</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="top">Position Finale (Top)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="top" min="1" max="100" placeholder="1 - 100" required>
+                    <div class="value-display" id="topDisplay">-</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="kills">Éliminations en Fin de Partie</label>
+                <div class="input-wrapper">
+                    <input type="number" id="kills" min="0" max="30" placeholder="0 - 30" required>
+                    <div class="value-display" id="killsDisplay">-</div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-calculate">Calculer les Points</button>
+                <button type="reset" class="btn-reset">Réinitialiser</button>
+            </div>
+        </form>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-label">Variation de Points Estimée</div>
+            <div class="result-value" id="resultValue">+0%</div>
+            <div class="result-detail" id="resultDetail"></div>
+        </div>
+
+        <div class="info-box">
+            <strong>📌 Comment ça marche ?</strong><br>
+            Le simulateur calcule vos points basés sur votre rang, votre position finale et vos éliminations en fin de partie. 
+            La formule applique des multiplicateurs régressifs selon votre rang. Plus vous êtes haut placé, plus sévère est le système.
+        </div>
+    </div>
+
+    <script>
+        // Configuration des rangs et leurs multiplicateurs
+        const rankConfig = {
+            'bronze': { multiplier: 1, severity: 1 },
+            'silver': { multiplier: 1.1, severity: 1.1 },
+            'gold': { multiplier: 1.2, severity: 1.2 },
+            'platinum': { multiplier: 1.3, severity: 1.3 },
+            'diamond': { multiplier: 1.5, severity: 1.4 },
+            'elite': { multiplier: 1.8, severity: 1.6 },
+            'champion': { multiplier: 2, severity: 1.8 }
+        };
+
+        // Thresholds pour les Top positions
+        const topThresholds = {
+            elite: { top10: 2, top25: -1, top26plus: -5 },
+            champion: { top10: 2, top25: -1, top26plus: -5 }
+        };
+
+        const form = document.getElementById('simulatorForm');
+        const rankInput = document.getElementById('rank');
+        const topInput = document.getElementById('top');
+        const killsInput = document.getElementById('kills');
+        const topDisplay = document.getElementById('topDisplay');
+        const killsDisplay = document.getElementById('killsDisplay');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultValue = document.getElementById('resultValue');
+        const resultDetail = document.getElementById('resultDetail');
+
+        // Mise à jour des affichages en temps réel
+        topInput.addEventListener('input', (e) => {
+            topDisplay.textContent = e.target.value || '-';
+        });
+
+        killsInput.addEventListener('input', (e) => {
+            killsDisplay.textContent = e.target.value || '-';
+        });
+
+        // Fonction de calcul principal
+        function calculatePoints(rank, top, kills) {
+            let baseValue = 0;
+            const config = rankConfig[rank];
+
+            // Détermination de la valeur de base selon le top
+            if (rank === 'elite' || rank === 'champion') {
+                if (top <= 10) {
+                    baseValue = 2;
+                } else if (top <= 25) {
+                    baseValue = -1;
+                } else {
+                    baseValue = -5;
+                }
+            } else {
+                // Pour les autres rangs, appliquer une logique simplifiée
+                if (top <= 10) {
+                    baseValue = 1;
+                } else if (top <= 25) {
+                    baseValue = -0.5;
+                } else {
+                    baseValue = -3;
+                }
+            }
+
+            // Calcul final avec multiplicateur de kills
+            const killBonus = kills * 1.5;
+            const finalPercentage = Math.round((baseValue + killBonus) * config.multiplier * 10) / 10;
+
+            return {
+                baseValue: baseValue,
+                killBonus: Math.round(killBonus * 10) / 10,
+                finalPercentage: finalPercentage
+            };
+        }
+
+        // Fonction pour générer le détail du résultat
+        function getResultDetail(rank, top, kills, calculation) {
+            let topCategory = '';
+            if (top <= 10) topCategory = 'Top 10 - Excellent';
+            else if (top <= 25) topCategory = 'Top 25 - Bon';
+            else topCategory = 'Top 26+ - À améliorer';
+
+            return `
+                <strong>${rank.toUpperCase()}</strong> | ${topCategory} | ${kills} éliminations<br>
+                Valeur de base: <strong>${calculation.baseValue > 0 ? '+' : ''}${calculation.baseValue}%</strong><br>
+                Bonus éliminations: <strong>+${calculation.killBonus}%</strong><br>
+                <strong>Résultat net: ${calculation.finalPercentage > 0 ? '+' : ''}${calculation.finalPercentage}%</strong>
+            `;
+        }
+
+        // Gestion de la soumission du formulaire
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const rank = rankInput.value;
+            const top = parseInt(topInput.value);
+            const kills = parseInt(killsInput.value);
+
+            if (!rank || !top || kills === undefined) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            const calculation = calculatePoints(rank, top, kills);
+            const percentage = calculation.finalPercentage;
+
+            // Mise à jour de l'affichage du résultat
+            resultValue.textContent = `${percentage > 0 ? '+' : ''}${percentage}%`;
+            resultValue.className = 'result-value ' + 
+                (percentage > 0 ? 'result-positive' : percentage < 0 ? 'result-negative' : 'result-neutral');
+
+            resultDetail.innerHTML = getResultDetail(rank, top, kills, calculation);
+            resultContainer.classList.add('active');
+        });
+
+        // Réinitialisation du formulaire
+        form.addEventListener('reset', () => {
+            topDisplay.textContent = '-';
+            killsDisplay.textContent = '-';
+            resultContainer.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
