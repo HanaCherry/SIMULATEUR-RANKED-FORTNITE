@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMULATEUR RANKED FORTNITE - Calculateur de Points</title>
+    <title>SIMULATEUR RANKED FORTNITE 2026 - Calculateur de Points</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0a1e3d 0%, #1a1a2e 50%, #2d0a3d 100%);
             color: #fff;
             min-height: 100vh;
             display: flex;
@@ -23,40 +23,57 @@
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid #00d4ff;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #00d4ff;
+            border-radius: 15px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), inset 0 0 20px rgba(0, 212, 255, 0.1);
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 2em;
+            margin-bottom: 5px;
+            font-size: 2.3em;
             color: #00d4ff;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+            letter-spacing: 2px;
         }
 
         .subtitle {
             text-align: center;
             color: #a0a0a0;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .season-badge {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(255, 200, 0, 0.2), rgba(0, 212, 255, 0.2));
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 200, 0, 0.5);
+            color: #ffc800;
+            font-weight: 700;
             font-size: 0.9em;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 700;
             color: #00d4ff;
             font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .input-wrapper {
@@ -69,9 +86,9 @@
         select {
             flex: 1;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00d4ff;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
             color: #fff;
             font-size: 1em;
             transition: all 0.3s ease;
@@ -80,13 +97,13 @@
         input[type="number"]:focus,
         select:focus {
             outline: none;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(0, 212, 255, 0.15);
             border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
         }
 
         input[type="number"]::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .value-display {
@@ -100,6 +117,23 @@
             color: #00ff88;
         }
 
+        .rank-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 700;
+            font-size: 0.7em;
+            margin-right: 8px;
+        }
+
+        select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
         .button-group {
             display: flex;
             gap: 10px;
@@ -110,29 +144,30 @@
             flex: 1;
             padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1em;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .btn-calculate {
             background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
             color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
         .btn-calculate:hover {
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
             transform: translateY(-2px);
         }
 
         .btn-reset {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            border: 1px solid #fff;
+            border: 2px solid #fff;
         }
 
         .btn-reset:hover {
@@ -142,11 +177,12 @@
         .result-container {
             margin-top: 30px;
             padding: 25px;
-            background: rgba(0, 212, 255, 0.1);
-            border: 2px solid #00d4ff;
-            border-radius: 8px;
+            background: rgba(0, 212, 255, 0.12);
+            border: 3px solid #00d4ff;
+            border-radius: 10px;
             text-align: center;
             display: none;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
         }
 
         .result-container.active {
@@ -169,13 +205,15 @@
             color: #a0a0a0;
             font-size: 0.9em;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .result-value {
-            font-size: 3em;
+            font-size: 3.5em;
             font-weight: 900;
             margin: 15px 0;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            text-shadow: 0 0 25px currentColor;
         }
 
         .result-positive {
@@ -191,25 +229,70 @@
         }
 
         .result-detail {
-            color: #a0a0a0;
+            color: #c0c0c0;
             font-size: 0.85em;
             margin-top: 15px;
-            line-height: 1.6;
+            line-height: 1.8;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .rank-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.8em;
+        }
+
+        .breakdown-item {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #00d4ff;
+        }
+
+        .breakdown-label {
+            color: #a0a0a0;
+            font-size: 0.85em;
+        }
+
+        .breakdown-value {
+            color: #00ff88;
+            font-weight: 700;
+            margin-top: 5px;
         }
 
         .info-box {
             margin-top: 30px;
             padding: 20px;
-            background: rgba(0, 212, 255, 0.05);
-            border-left: 3px solid #00d4ff;
-            border-radius: 4px;
+            background: rgba(0, 212, 255, 0.08);
+            border-left: 4px solid #00d4ff;
+            border-radius: 6px;
             font-size: 0.85em;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #c0c0c0;
         }
 
         .info-box strong {
             color: #00d4ff;
+        }
+
+        .rank-colors {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 0.75em;
+        }
+
+        .color-chip {
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 600px) {
@@ -218,7 +301,7 @@
             }
 
             h1 {
-                font-size: 1.5em;
+                font-size: 1.8em;
             }
 
             .button-group {
@@ -226,151 +309,293 @@
             }
 
             .result-value {
-                font-size: 2em;
+                font-size: 2.5em;
+            }
+
+            .rank-breakdown {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>⚔️ SIMULATEUR RANKED</h1>
-        <p class="subtitle">Fortnite - Calculateur de Points</p>
+        <h1>⚔️ RANKED SIMULATOR</h1>
+        <p class="subtitle">Fortnite Chapter 6 - Season 1 2026</p>
+        <div class="season-badge">🎮 Système de classement officiel 2026 - Tous les rangs</div>
 
         <form id="simulatorForm">
             <div class="form-group">
-                <label for="rank">Rang Actuel</label>
+                <label for="rank">📊 Sélectionnez votre Rang</label>
                 <select id="rank" required>
-                    <option value="">-- Sélectionnez votre rang --</option>
-                    <option value="bronze">Bronze</option>
-                    <option value="silver">Silver</option>
-                    <option value="gold">Gold</option>
-                    <option value="platinum">Platinum</option>
-                    <option value="diamond">Diamond</option>
-                    <option value="elite">Elite</option>
-                    <option value="champion">Champion</option>
+                    <option value="">-- Choisir un rang --</option>
+                    <optgroup label="🥉 RANGS NORMAUX">
+                        <option value="bronze1">Bronze I</option>
+                        <option value="bronze2">Bronze II</option>
+                        <option value="bronze3">Bronze III</option>
+                        <option value="silver1">Silver I</option>
+                        <option value="silver2">Silver II</option>
+                        <option value="silver3">Silver III</option>
+                        <option value="gold1">Gold I</option>
+                        <option value="gold2">Gold II</option>
+                        <option value="gold3">Gold III</option>
+                        <option value="platinum1">Platinum I</option>
+                        <option value="platinum2">Platinum II</option>
+                        <option value="platinum3">Platinum III</option>
+                        <option value="diamond1">Diamond I</option>
+                        <option value="diamond2">Diamond II</option>
+                        <option value="diamond3">Diamond III</option>
+                    </optgroup>
+                    <optgroup label="👑 RANGS ÉLITES">
+                        <option value="elite">Elite</option>
+                        <option value="champion">Champion</option>
+                        <option value="unreal">Unreal</option>
+                        <option value="unreallegends">Unreal Legends</option>
+                    </optgroup>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="top">Position Finale (Top)</label>
+                <label for="placement">🎯 Position Finale (Top)</label>
                 <div class="input-wrapper">
-                    <input type="number" id="top" min="1" max="100" placeholder="1 - 100" required>
-                    <div class="value-display" id="topDisplay">-</div>
+                    <input type="number" id="placement" min="1" max="100" placeholder="1 - 100" required>
+                    <div class="value-display" id="placementDisplay">-</div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="kills">Éliminations en Fin de Partie</label>
+                <label for="eliminations">💥 Éliminations Totales</label>
                 <div class="input-wrapper">
-                    <input type="number" id="kills" min="0" max="30" placeholder="0 - 30" required>
-                    <div class="value-display" id="killsDisplay">-</div>
+                    <input type="number" id="eliminations" min="0" max="30" placeholder="0 - 30" required>
+                    <div class="value-display" id="eliminationsDisplay">-</div>
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="lateGameElims">⚡ Éliminations en Fin de Partie (Zone 5+)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="lateGameElims" min="0" max="15" placeholder="0 - 15" required>
+                    <div class="value-display" id="lateGameDisplay">-</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="opponentRank">👥 Rang moyen des adversaires éliminés</label>
+                <select id="opponentRank" required>
+                    <option value="">-- Sélectionner --</option>
+                    <option value="low">Rangs Bas (Bronze-Gold)</option>
+                    <option value="medium">Rangs Moyens (Platinum-Diamond)</option>
+                    <option value="high">Rangs Hauts (Elite-Champion)</option>
+                </select>
+            </div>
+
             <div class="button-group">
-                <button type="submit" class="btn-calculate">Calculer les Points</button>
-                <button type="reset" class="btn-reset">Réinitialiser</button>
+                <button type="submit" class="btn-calculate">⚡ CALCULER LES POINTS</button>
+                <button type="reset" class="btn-reset">🔄 Réinitialiser</button>
             </div>
         </form>
 
         <div class="result-container" id="resultContainer">
-            <div class="result-label">Variation de Points Estimée</div>
+            <div class="result-label">📈 Variation de Points Estimée</div>
             <div class="result-value" id="resultValue">+0%</div>
             <div class="result-detail" id="resultDetail"></div>
+            <div class="rank-breakdown" id="rankBreakdown"></div>
         </div>
 
         <div class="info-box">
-            <strong>📌 Comment ça marche ?</strong><br>
-            Le simulateur calcule vos points basés sur votre rang, votre position finale et vos éliminations en fin de partie. 
-            La formule applique des multiplicateurs régressifs selon votre rang. Plus vous êtes haut placé, plus sévère est le système.
+            <strong>📌 Système de Classement 2026</strong><br>
+            Le simulateur calcule vos points basés sur :<br>
+            • <strong>Placement</strong> (Facteur majeur)<br>
+            • <strong>Éliminations</strong> (Bonus progressif)<br>
+            • <strong>Éliminations tardives</strong> (Multiplicateur x2)<br>
+            • <strong>Difficulté adverse</strong> (Modificateur de rang)<br>
+            <br>
+            <strong>9 rangs disponibles</strong> : Bronze → Silver → Gold → Platinum → Diamond → Elite → Champion → Unreal → Unreal Legends
+        </div>
+
+        <div class="info-box" style="margin-top: 20px; background: rgba(255, 200, 0, 0.08); border-left-color: #ffc800;">
+            <strong style="color: #ffc800;">🎮 Guide des Rangs</strong><br>
+            <div class="rank-colors">
+                <div class="color-chip" style="background: #8b6f47;">Bronze</div>
+                <div class="color-chip" style="background: #c0c0c0; color: #000;">Silver</div>
+                <div class="color-chip" style="background: #ffc800; color: #000;">Gold</div>
+                <div class="color-chip" style="background: #00d4ff;">Platinum</div>
+                <div class="color-chip" style="background: #6dd5ed;">Diamond</div>
+                <div class="color-chip" style="background: #ff6b9d;">Elite</div>
+                <div class="color-chip" style="background: #ffa500;">Champion</div>
+                <div class="color-chip" style="background: #ff1493;">Unreal</div>
+                <div class="color-chip" style="background: linear-gradient(135deg, #ff1493, #ffa500);">U.Legends</div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Configuration des rangs et leurs multiplicateurs
+        // Configuration complète des rangs 2026
         const rankConfig = {
-            'bronze': { multiplier: 1, severity: 1 },
-            'silver': { multiplier: 1.1, severity: 1.1 },
-            'gold': { multiplier: 1.2, severity: 1.2 },
-            'platinum': { multiplier: 1.3, severity: 1.3 },
-            'diamond': { multiplier: 1.5, severity: 1.4 },
-            'elite': { multiplier: 1.8, severity: 1.6 },
-            'champion': { multiplier: 2, severity: 1.8 }
+            'bronze1': { tier: 'Bronze', division: 'I', multiplier: 0.8, severity: 0.9, color: '#8b6f47' },
+            'bronze2': { tier: 'Bronze', division: 'II', multiplier: 0.85, severity: 0.9, color: '#8b6f47' },
+            'bronze3': { tier: 'Bronze', division: 'III', multiplier: 0.9, severity: 0.9, color: '#8b6f47' },
+            'silver1': { tier: 'Silver', division: 'I', multiplier: 1.0, severity: 1.0, color: '#c0c0c0' },
+            'silver2': { tier: 'Silver', division: 'II', multiplier: 1.05, severity: 1.0, color: '#c0c0c0' },
+            'silver3': { tier: 'Silver', division: 'III', multiplier: 1.1, severity: 1.0, color: '#c0c0c0' },
+            'gold1': { tier: 'Gold', division: 'I', multiplier: 1.15, severity: 1.1, color: '#ffc800' },
+            'gold2': { tier: 'Gold', division: 'II', multiplier: 1.2, severity: 1.1, color: '#ffc800' },
+            'gold3': { tier: 'Gold', division: 'III', multiplier: 1.25, severity: 1.1, color: '#ffc800' },
+            'platinum1': { tier: 'Platinum', division: 'I', multiplier: 1.3, severity: 1.2, color: '#00d4ff' },
+            'platinum2': { tier: 'Platinum', division: 'II', multiplier: 1.35, severity: 1.2, color: '#00d4ff' },
+            'platinum3': { tier: 'Platinum', division: 'III', multiplier: 1.4, severity: 1.2, color: '#00d4ff' },
+            'diamond1': { tier: 'Diamond', division: 'I', multiplier: 1.5, severity: 1.3, color: '#6dd5ed' },
+            'diamond2': { tier: 'Diamond', division: 'II', multiplier: 1.55, severity: 1.3, color: '#6dd5ed' },
+            'diamond3': { tier: 'Diamond', division: 'III', multiplier: 1.6, severity: 1.3, color: '#6dd5ed' },
+            'elite': { tier: 'Elite', division: '-', multiplier: 1.8, severity: 1.5, color: '#ff6b9d' },
+            'champion': { tier: 'Champion', division: '-', multiplier: 2.0, severity: 1.7, color: '#ffa500' },
+            'unreal': { tier: 'Unreal', division: '-', multiplier: 2.3, severity: 1.9, color: '#ff1493' },
+            'unreallegends': { tier: 'Unreal Legends', division: '-', multiplier: 2.5, severity: 2.0, color: '#ff1493' }
         };
 
-        // Thresholds pour les Top positions
-        const topThresholds = {
-            elite: { top10: 2, top25: -1, top26plus: -5 },
-            champion: { top10: 2, top25: -1, top26plus: -5 }
+        // Facteurs de placement
+        const placementFactors = {
+            top5: 3.5,
+            top10: 2.5,
+            top25: 0.5,
+            top50: -1.5,
+            top100: -4.0
         };
 
         const form = document.getElementById('simulatorForm');
         const rankInput = document.getElementById('rank');
-        const topInput = document.getElementById('top');
-        const killsInput = document.getElementById('kills');
-        const topDisplay = document.getElementById('topDisplay');
-        const killsDisplay = document.getElementById('killsDisplay');
+        const placementInput = document.getElementById('placement');
+        const eliminationsInput = document.getElementById('eliminations');
+        const lateGameInput = document.getElementById('lateGameElims');
+        const opponentRankInput = document.getElementById('opponentRank');
+        const placementDisplay = document.getElementById('placementDisplay');
+        const eliminationsDisplay = document.getElementById('eliminationsDisplay');
+        const lateGameDisplay = document.getElementById('lateGameDisplay');
         const resultContainer = document.getElementById('resultContainer');
         const resultValue = document.getElementById('resultValue');
         const resultDetail = document.getElementById('resultDetail');
+        const rankBreakdown = document.getElementById('rankBreakdown');
 
         // Mise à jour des affichages en temps réel
-        topInput.addEventListener('input', (e) => {
-            topDisplay.textContent = e.target.value || '-';
+        placementInput.addEventListener('input', (e) => {
+            placementDisplay.textContent = e.target.value || '-';
         });
 
-        killsInput.addEventListener('input', (e) => {
-            killsDisplay.textContent = e.target.value || '-';
+        eliminationsInput.addEventListener('input', (e) => {
+            eliminationsDisplay.textContent = e.target.value || '-';
+        });
+
+        lateGameInput.addEventListener('input', (e) => {
+            lateGameDisplay.textContent = e.target.value || '-';
         });
 
         // Fonction de calcul principal
-        function calculatePoints(rank, top, kills) {
-            let baseValue = 0;
+        function calculatePoints(rank, placement, eliminations, lateGameElims, opponentRank) {
             const config = rankConfig[rank];
+            let points = 0;
 
-            // Détermination de la valeur de base selon le top
-            if (rank === 'elite' || rank === 'champion') {
-                if (top <= 10) {
-                    baseValue = 2;
-                } else if (top <= 25) {
-                    baseValue = -1;
-                } else {
-                    baseValue = -5;
-                }
+            // 1. FACTEUR DE PLACEMENT (Fondamental)
+            let placementBonus = 0;
+            if (placement <= 5) {
+                placementBonus = placementFactors.top5;
+            } else if (placement <= 10) {
+                placementBonus = placementFactors.top10;
+            } else if (placement <= 25) {
+                placementBonus = placementFactors.top25;
+            } else if (placement <= 50) {
+                placementBonus = placementFactors.top50;
             } else {
-                // Pour les autres rangs, appliquer une logique simplifiée
-                if (top <= 10) {
-                    baseValue = 1;
-                } else if (top <= 25) {
-                    baseValue = -0.5;
-                } else {
-                    baseValue = -3;
-                }
+                placementBonus = placementFactors.top100;
             }
 
-            // Calcul final avec multiplicateur de kills
-            const killBonus = kills * 1.5;
-            const finalPercentage = Math.round((baseValue + killBonus) * config.multiplier * 10) / 10;
+            // Application de la sévérité au placement
+            placementBonus = placementBonus * config.severity;
+            points += placementBonus;
+
+            // 2. FACTEUR D'ÉLIMINATIONS (Base)
+            let elimBonus = eliminations * 0.8;
+            points += elimBonus;
+
+            // 3. FACTEUR D'ÉLIMINATIONS TARDIVES (Multiplicateur x2)
+            let lateGameBonus = lateGameElims * 1.5 * 2;
+            points += lateGameBonus;
+
+            // 4. MODIFICATEUR DE DIFFICULTÉ ADVERSE
+            let opponentMultiplier = 1.0;
+            if (opponentRank === 'low') {
+                opponentMultiplier = 0.8;
+            } else if (opponentRank === 'medium') {
+                opponentMultiplier = 1.2;
+            } else if (opponentRank === 'high') {
+                opponentMultiplier = 1.5;
+            }
+
+            // Application du multiplicateur adverse uniquement aux éliminations
+            let totalElimBonus = (elimBonus + lateGameBonus) * opponentMultiplier;
+            points = points - (elimBonus + lateGameBonus) + totalElimBonus;
+
+            // 5. MULTIPLICATEUR DE RANG (Final)
+            const finalPoints = Math.round(points * config.multiplier * 10) / 10;
 
             return {
-                baseValue: baseValue,
-                killBonus: Math.round(killBonus * 10) / 10,
-                finalPercentage: finalPercentage
+                placementBonus: Math.round(placementBonus * 10) / 10,
+                elimBonus: Math.round(elimBonus * 10) / 10,
+                lateGameBonus: Math.round(lateGameBonus * 10) / 10,
+                opponentMultiplier: opponentMultiplier,
+                rankMultiplier: config.multiplier,
+                finalPoints: finalPoints
             };
         }
 
         // Fonction pour générer le détail du résultat
-        function getResultDetail(rank, top, kills, calculation) {
-            let topCategory = '';
-            if (top <= 10) topCategory = 'Top 10 - Excellent';
-            else if (top <= 25) topCategory = 'Top 25 - Bon';
-            else topCategory = 'Top 26+ - À améliorer';
+        function getResultDetail(rank, placement, eliminations, lateGameElims, calculation) {
+            const config = rankConfig[rank];
+            let placementCategory = '';
+            
+            if (placement <= 5) placementCategory = '🏆 Top 5 - Excellent';
+            else if (placement <= 10) placementCategory = '⭐ Top 10 - Très Bon';
+            else if (placement <= 25) placementCategory = '✨ Top 25 - Bon';
+            else if (placement <= 50) placementCategory = '👍 Top 50 - Moyen';
+            else placementCategory = '❌ Top 100 - Faible';
+
+            let rankDisplay = config.division === '-' ? config.tier : `${config.tier} ${config.division}`;
 
             return `
-                <strong>${rank.toUpperCase()}</strong> | ${topCategory} | ${kills} éliminations<br>
-                Valeur de base: <strong>${calculation.baseValue > 0 ? '+' : ''}${calculation.baseValue}%</strong><br>
-                Bonus éliminations: <strong>+${calculation.killBonus}%</strong><br>
-                <strong>Résultat net: ${calculation.finalPercentage > 0 ? '+' : ''}${calculation.finalPercentage}%</strong>
+                <div style="margin-bottom: 12px;">
+                    <strong>${rankDisplay}</strong> | ${placementCategory} | ${eliminations} élims (${lateGameElims} tardives)
+                </div>
+            `;
+        }
+
+        // Fonction pour générer la décomposition
+        function getBreakdown(calculation) {
+            return `
+                <div class="breakdown-item">
+                    <div class="breakdown-label">📍 Placement</div>
+                    <div class="breakdown-value">${calculation.placementBonus > 0 ? '+' : ''}${calculation.placementBonus}%</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">💥 Éliminations</div>
+                    <div class="breakdown-value">${calculation.elimBonus > 0 ? '+' : ''}${calculation.elimBonus}%</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">⚡ Fin de Partie</div>
+                    <div class="breakdown-value">${calculation.lateGameBonus > 0 ? '+' : ''}${calculation.lateGameBonus}%</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">👥 Adversaires</div>
+                    <div class="breakdown-value">x${calculation.opponentMultiplier.toFixed(1)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">🎖️ Rang</div>
+                    <div class="breakdown-value">x${calculation.rankMultiplier.toFixed(1)}</div>
+                </div>
+                <div class="breakdown-item" style="grid-column: 1 / -1; border-left-color: #00ff88;">
+                    <div class="breakdown-label">📊 RÉSULTAT FINAL</div>
+                    <div class="breakdown-value" style="font-size: 1.2em; color: ${calculation.finalPoints > 0 ? '#00ff88' : calculation.finalPoints < 0 ? '#ff4444' : '#ffaa00'};">
+                        ${calculation.finalPoints > 0 ? '+' : ''}${calculation.finalPoints}%
+                    </div>
+                </div>
             `;
         }
 
@@ -379,30 +604,39 @@
             e.preventDefault();
 
             const rank = rankInput.value;
-            const top = parseInt(topInput.value);
-            const kills = parseInt(killsInput.value);
+            const placement = parseInt(placementInput.value);
+            const eliminations = parseInt(eliminationsInput.value);
+            const lateGameElims = parseInt(lateGameInput.value);
+            const opponentRank = opponentRankInput.value;
 
-            if (!rank || !top || kills === undefined) {
+            if (!rank || !placement || eliminations === undefined || lateGameElims === undefined || !opponentRank) {
                 alert('Veuillez remplir tous les champs');
                 return;
             }
 
-            const calculation = calculatePoints(rank, top, kills);
-            const percentage = calculation.finalPercentage;
+            if (lateGameElims > eliminations) {
+                alert('Les éliminations tardives ne peuvent pas dépasser le total');
+                return;
+            }
+
+            const calculation = calculatePoints(rank, placement, eliminations, lateGameElims, opponentRank);
+            const finalPoints = calculation.finalPoints;
 
             // Mise à jour de l'affichage du résultat
-            resultValue.textContent = `${percentage > 0 ? '+' : ''}${percentage}%`;
+            resultValue.textContent = `${finalPoints > 0 ? '+' : ''}${finalPoints}%`;
             resultValue.className = 'result-value ' + 
-                (percentage > 0 ? 'result-positive' : percentage < 0 ? 'result-negative' : 'result-neutral');
+                (finalPoints > 0 ? 'result-positive' : finalPoints < 0 ? 'result-negative' : 'result-neutral');
 
-            resultDetail.innerHTML = getResultDetail(rank, top, kills, calculation);
+            resultDetail.innerHTML = getResultDetail(rank, placement, eliminations, lateGameElims, calculation);
+            rankBreakdown.innerHTML = getBreakdown(calculation);
             resultContainer.classList.add('active');
         });
 
         // Réinitialisation du formulaire
         form.addEventListener('reset', () => {
-            topDisplay.textContent = '-';
-            killsDisplay.textContent = '-';
+            placementDisplay.textContent = '-';
+            eliminationsDisplay.textContent = '-';
+            lateGameDisplay.textContent = '-';
             resultContainer.classList.remove('active');
         });
     </script>
